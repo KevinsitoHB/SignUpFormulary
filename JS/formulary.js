@@ -21,20 +21,39 @@ const credentials = {
 function eventListeners() {
   $signUpForm.addEventListener('submit', handleSubmit);
 
-  $signUpForm.name.addEventListener('input', checkInput('name'));
-  $signUpForm.name.addEventListener('blur', checkInput('name'));
+  $signUpForm.name.addEventListener('input', () => {
+    checkInput('name');
+  });
+  $signUpForm.name.addEventListener('blur', () => {
+    checkInput('name');
+  });
+  $signUpForm.email.addEventListener('input', () => {
+    checkInput('email');
+  });
+  $signUpForm.email.addEventListener('blur', () => {
+    checkInput('email');
+  });
 
-  $signUpForm.email.addEventListener('input', checkInput);
-  $signUpForm.email.addEventListener('blur', checkInput);
+  $signUpForm.phone.addEventListener('input', () => {
+    checkInput('phone');
+  });
+  $signUpForm.phone.addEventListener('blur', () => {
+    checkInput('phone');
+  });
 
-  $signUpForm.phone.addEventListener('input', checkInput);
-  $signUpForm.phone.addEventListener('blur', checkInput);
+  $signUpForm.password.addEventListener('input', () => {
+    checkInput('password');
+  });
+  $signUpForm.password.addEventListener('blur', () => {
+    checkInput('password');
+  });
 
-  $signUpForm.password.addEventListener('input', checkInput);
-  $signUpForm.password.addEventListener('blur', checkInput);
-
-  $signUpForm.password2.addEventListener('input', checkInput);
-  $signUpForm.password2.addEventListener('blur', checkInput);
+  $signUpForm.password2.addEventListener('input', () => {
+    checkInput('password2');
+  });
+  $signUpForm.password2.addEventListener('blur', () => {
+    checkInput('password2');
+  });
 }
 
 //FUNCTIONS
@@ -56,7 +75,7 @@ function checkInput(inputType) {
     const $warningDivName = d.getElementById('warningDivName');
     credentials.name = $signUpForm.name.value.trim();
     if (credentials.name == '') {
-      $warningDivName.textContent = 'Please enter your name';
+      $warningDivName.textContent = 'Please enter your full name';
     } else {
       $warningDivName.textContent = '';
     }
@@ -70,18 +89,34 @@ function checkInput(inputType) {
       $warningDivEmail.textContent = '';
     }
   }
+
   if (inputType === 'phone') {
     const $warningDivPhone = d.getElementById('warningDivPhone');
-    credentials.phone = $signUpForm.phone.value.trim;
+    credentials.phone = $signUpForm.phone.value.trim();
     if (credentials.phone == '') {
       $warningDivPhone.textContent = 'Please enter your phone number';
     } else {
       $warningDivPhone.textContent = '';
     }
   }
-
-  const $warningDivPassword = d.getElementById('warningDivPassword');
-  const $warningDivPassword2 = d.getElementById('warningDivPassword2');
+  if (inputType === 'password') {
+    const $warningDivPassword = d.getElementById('warningDivPassword');
+    credentials.password = $signUpForm.password.value.trim();
+    if (credentials.password == '') {
+      $warningDivPassword.textContent = 'Please enter a password';
+    } else {
+      $warningDivPassword.textContent = '';
+    }
+  }
+  if (inputType === 'password2') {
+    const $warningDivPassword2 = d.getElementById('warningDivPassword2');
+    credentials.password2 = $signUpForm.password2.value.trim();
+    if (credentials.password2 == '') {
+      $warningDivPassword2.textContent = 'Please re-enter your password';
+    } else {
+      $warningDivPassword2.textContent = '';
+    }
+  }
 }
 
 function areValidCredentials(userCredentials) {
