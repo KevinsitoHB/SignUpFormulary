@@ -1,4 +1,5 @@
 'use strict';
+//VARIABLES
 
 const d = document;
 
@@ -8,14 +9,19 @@ d.addEventListener('DOMContentLoaded', () => {
   eventListeners();
 });
 
-//VARIABLES
 const credentials = {
   name: null,
+  isNameValid: null,
   email: null,
+  isEmailValid: null,
   phone: null,
+  isPhoneValid: null,
   password: null,
+  isPasswordValid: null,
   password2: null,
+  isPasswordValid2: null,
 };
+let allowSubmit = false;
 
 // EVENTS
 function eventListeners() {
@@ -58,83 +64,91 @@ function eventListeners() {
 
 //FUNCTIONS
 
-function handleSubmit(event) {
-  event.preventDefault();
-
-  const validCredentials = areValidCredentials(credentials);
-  if (validCredentials) {
-    console.log('Send data');
-  } else {
-    console.log("Don't send data");
-  }
-}
-
 function checkInput(inputType) {
   console.log(inputType);
   if (inputType === 'name') {
     const $warningDivName = d.getElementById('warningDivName');
     credentials.name = $signUpForm.name.value.trim();
+    isNameValid = false;
     if (credentials.name == '') {
       $warningDivName.textContent = 'Please enter your full name';
     } else {
       $warningDivName.textContent = '';
+      isNameValid = true;
     }
   }
   if (inputType === 'email') {
     const $warningDivEmail = d.getElementById('warningDivEmail');
     credentials.email = $signUpForm.email.value.trim();
+    isEmailValid = false;
     if (credentials.email == '') {
       $warningDivEmail.textContent = 'Please enter your email';
     } else {
       $warningDivEmail.textContent = '';
+      isEmailValid = true;
     }
   }
 
   if (inputType === 'phone') {
     const $warningDivPhone = d.getElementById('warningDivPhone');
     credentials.phone = $signUpForm.phone.value.trim();
+    isPhoneValid = false;
     if (credentials.phone == '') {
       $warningDivPhone.textContent = 'Please enter your phone number';
     } else {
       $warningDivPhone.textContent = '';
+      isPhoneValid = true;
     }
   }
   if (inputType === 'password') {
     const $warningDivPassword = d.getElementById('warningDivPassword');
     credentials.password = $signUpForm.password.value.trim();
+    isPasswordValid = false;
     if (credentials.password == '') {
       $warningDivPassword.textContent = 'Please enter a password';
     } else {
       $warningDivPassword.textContent = '';
+      isPasswordValid = true;
     }
   }
   if (inputType === 'password2') {
     const $warningDivPassword2 = d.getElementById('warningDivPassword2');
     credentials.password2 = $signUpForm.password2.value.trim();
+    isPasswordValid2 = false;
     if (credentials.password2 == '') {
       $warningDivPassword2.textContent = 'Please re-enter your password';
     } else {
       $warningDivPassword2.textContent = '';
+      isPasswordValid2 = false;
     }
   }
 }
 
-function areValidCredentials(userCredentials) {
-  console.log(userCredentials);
-  const name = userCredentials.name.trim();
-  const email = userCredentials.email.trim();
-  const phone = userCredentials.phone.trim();
-  const password = userCredentials.password.trim();
-  const password2 = userCredentials.password2.trim();
-  if (
-    name === '' ||
-    email === '' ||
-    phone === '' ||
-    password === '' ||
-    password2 === ''
-  ) {
-    return false;
+function isReadySubmit(userCredentials) {
+  allowSubmit =
+    credentials.isNameValid &&
+    credentials.isEmailValid &&
+    credentials.isPhoneValid &&
+    credentials.isPasswordValid &&
+    credentials.isPasswordValid2;
+  if (allowSubmit) {
+    $signUpForm.submitButton.removeAttribute('disabled');
+  } else {
+    $signUpForm.submitButton.removeAttribute('disabled', true);
+  }
+}
 
-    return true;
+function handleSubmit(event) {
+  event.preventDefault();
+  if (allowSubmit) {
+    console.log('Credentials to submit: ', {
+      name: credentials.name,
+      email: credentials.email,
+      password: credentials.password,
+    });
+    $signUpForm.reset();
+    window.location.href = '/HTML/private.html';
+  } else {
+    console.log('Not Valid');
   }
 }
