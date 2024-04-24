@@ -69,62 +69,63 @@ function checkInput(inputType) {
   if (inputType === 'name') {
     const $warningDivName = d.getElementById('warningDivName');
     credentials.name = $signUpForm.name.value.trim();
-    isNameValid = false;
+    credentials.isNameValid = false;
     if (credentials.name == '') {
       $warningDivName.textContent = 'Please enter your full name';
     } else {
       $warningDivName.textContent = '';
-      isNameValid = true;
+      credentials.isNameValid = true;
     }
   }
   if (inputType === 'email') {
     const $warningDivEmail = d.getElementById('warningDivEmail');
     credentials.email = $signUpForm.email.value.trim();
-    isEmailValid = false;
+    credentials.isEmailValid = false;
     if (credentials.email == '') {
       $warningDivEmail.textContent = 'Please enter your email';
     } else {
       $warningDivEmail.textContent = '';
-      isEmailValid = true;
+      credentials.isEmailValid = true;
     }
   }
 
   if (inputType === 'phone') {
     const $warningDivPhone = d.getElementById('warningDivPhone');
     credentials.phone = $signUpForm.phone.value.trim();
-    isPhoneValid = false;
+    credentials.isPhoneValid = false;
     if (credentials.phone == '') {
       $warningDivPhone.textContent = 'Please enter your phone number';
     } else {
       $warningDivPhone.textContent = '';
-      isPhoneValid = true;
+      credentials.isPhoneValid = true;
     }
   }
   if (inputType === 'password') {
     const $warningDivPassword = d.getElementById('warningDivPassword');
     credentials.password = $signUpForm.password.value.trim();
-    isPasswordValid = false;
+    credentials.isPasswordValid = false;
     if (credentials.password == '') {
       $warningDivPassword.textContent = 'Please enter a password';
     } else {
       $warningDivPassword.textContent = '';
-      isPasswordValid = true;
+      credentials.isPasswordValid = true;
     }
   }
   if (inputType === 'password2') {
     const $warningDivPassword2 = d.getElementById('warningDivPassword2');
     credentials.password2 = $signUpForm.password2.value.trim();
-    isPasswordValid2 = false;
+    credentials.isPasswordValid2 = false;
     if (credentials.password2 == '') {
       $warningDivPassword2.textContent = 'Please re-enter your password';
     } else {
       $warningDivPassword2.textContent = '';
-      isPasswordValid2 = false;
+      credentials.isPasswordValid2 = false;
     }
   }
+  isReadySubmit();
 }
 
-function isReadySubmit(userCredentials) {
+function isReadySubmit() {
   allowSubmit =
     credentials.isNameValid &&
     credentials.isEmailValid &&
@@ -134,7 +135,7 @@ function isReadySubmit(userCredentials) {
   if (allowSubmit) {
     $signUpForm.submitButton.removeAttribute('disabled');
   } else {
-    $signUpForm.submitButton.removeAttribute('disabled', true);
+    $signUpForm.submitButton.setAttribute('disabled', true);
   }
 }
 

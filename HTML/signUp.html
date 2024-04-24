@@ -21,26 +21,26 @@
             <fieldset>
                 <legend>Sign Up</legend>
                 <label for="name">Enter your full name</label>
-                <input type="text" name="name" id="name"><br>
+                <input type="text" name="name" id="name" required><br>
                 <div class="warningDiv" id="warningDivName"></div>
 
                 <label for="email">Enter your email</label>
-                <input type="email" name="email" id="email"><br>
+                <input type="email" name="email" id="email" required><br>
                 <div class="warningDiv" id="warningDivEmail"></div>
 
                 <label for="phone">Enter your phone number</label>
-                <input type="number" name="phone" id="phone"><br>
+                <input type="number" name="phone" id="phone" required><br>
                 <div class="warningDiv" id="warningDivPhone"></div>
 
                 <label for="password">Enter your password</label>
-                <input type="password" name="password" id="password"><br>
+                <input type="password" name="password" id="password" required><br>
                 <div class="warningDiv" id="warningDivPassword"></div>
 
                 <label for="password2">Enter your password again</label>
-                <input type="password" name="password2" id="password2"><br>
+                <input type="password" name="password2" id="password2" required><br>
                 <div class="warningDiv" id="warningDivPassword2"></div>
 
-                <button type="submit" id="submitButton">Sign Up</button>
+                <button type="submit" id="submitButton" name="submitButton" disabled>Sign Up</button>
             </fieldset>
         </form>
     </section>
