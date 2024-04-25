@@ -1,14 +1,8 @@
 'use strict';
+
 //VARIABLES
-
 const d = document;
-
 const $signUpForm = d.getElementById('signUpForm');
-
-d.addEventListener('DOMContentLoaded', () => {
-  eventListeners();
-});
-
 const credentials = {
   name: null,
   isNameValid: null,
@@ -24,9 +18,12 @@ const credentials = {
 let allowSubmit = false;
 
 // EVENTS
-function eventListeners() {
-  $signUpForm.addEventListener('submit', handleSubmit);
+d.addEventListener('DOMContentLoaded', () => {
+  eventListeners();
+});
 
+// FUNCTIONS
+function eventListeners() {
   $signUpForm.name.addEventListener('input', () => {
     checkInput('name');
   });
@@ -60,12 +57,12 @@ function eventListeners() {
   $signUpForm.password2.addEventListener('blur', () => {
     checkInput('password2');
   });
+  $signUpForm.addEventListener('submit', handleSubmit);
 }
 
 //FUNCTIONS
 
 function checkInput(inputType) {
-  console.log(inputType);
   if (inputType === 'name') {
     const $warningDivName = d.getElementById('warningDivName');
     credentials.name = $signUpForm.name.value.trim();
@@ -78,11 +75,14 @@ function checkInput(inputType) {
     }
   }
   if (inputType === 'email') {
+    const regExp = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     const $warningDivEmail = d.getElementById('warningDivEmail');
     credentials.email = $signUpForm.email.value.trim();
     credentials.isEmailValid = false;
     if (credentials.email == '') {
       $warningDivEmail.textContent = 'Please enter your email';
+    } else if (!regExp.test(credentials.email)) {
+      $warningDivEmail.textContent = 'Please enter a valid email';
     } else {
       $warningDivEmail.textContent = '';
       credentials.isEmailValid = true;
@@ -106,6 +106,11 @@ function checkInput(inputType) {
     credentials.isPasswordValid = false;
     if (credentials.password == '') {
       $warningDivPassword.textContent = 'Please enter a password';
+    } else if (
+      credentials.password2 &&
+      credentials.password != credentials.password2
+    ) {
+      $warningDivPassword.textContent = "Your password doesn't match";
     } else {
       $warningDivPassword.textContent = '';
       credentials.isPasswordValid = true;
@@ -117,9 +122,14 @@ function checkInput(inputType) {
     credentials.isPasswordValid2 = false;
     if (credentials.password2 == '') {
       $warningDivPassword2.textContent = 'Please re-enter your password';
+    } else if (
+      credentials.password &&
+      credentials.password2 != credentials.password
+    ) {
+      $warningDivPassword2.textContent = "Your password doesn't match";
     } else {
       $warningDivPassword2.textContent = '';
-      credentials.isPasswordValid2 = false;
+      credentials.isPasswordValid2 = true;
     }
   }
   isReadySubmit();
@@ -147,9 +157,11 @@ function handleSubmit(event) {
       email: credentials.email,
       password: credentials.password,
     });
+    console.log('Data sent to Backend');
     $signUpForm.reset();
     window.location.href = '/HTML/private.html';
+    //window.location.replace = '/HTML/private.html';
   } else {
-    console.log('Not Valid');
+    console.log('Data not Valid');
   }
 }
