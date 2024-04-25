@@ -24,6 +24,8 @@ d.addEventListener('DOMContentLoaded', () => {
 
 // FUNCTIONS
 function eventListeners() {
+  isReadySubmit();
+
   $signUpForm.name.addEventListener('input', () => {
     checkInput('name');
   });
@@ -57,6 +59,7 @@ function eventListeners() {
   $signUpForm.password2.addEventListener('blur', () => {
     checkInput('password2');
   });
+
   $signUpForm.addEventListener('submit', handleSubmit);
 }
 
@@ -72,6 +75,7 @@ function checkInput(inputType) {
     } else {
       $warningDivName.textContent = '';
       credentials.isNameValid = true;
+      isReadySubmit();
     }
   }
   if (inputType === 'email') {
@@ -86,6 +90,7 @@ function checkInput(inputType) {
     } else {
       $warningDivEmail.textContent = '';
       credentials.isEmailValid = true;
+      isReadySubmit();
     }
   }
 
@@ -98,27 +103,32 @@ function checkInput(inputType) {
     } else {
       $warningDivPhone.textContent = '';
       credentials.isPhoneValid = true;
+      isReadySubmit();
     }
   }
   if (inputType === 'password') {
-    const $warningDivPassword = d.getElementById('warningDivPassword');
+    const $warningDivPassword2 = d.getElementById('warningDivPassword2');
     credentials.password = $signUpForm.password.value.trim();
+    console.log(credentials.password);
     credentials.isPasswordValid = false;
     if (credentials.password == '') {
-      $warningDivPassword.textContent = 'Please enter a password';
+      $warningDivPassword2.textContent = 'Please enter a password';
     } else if (
       credentials.password2 &&
       credentials.password != credentials.password2
     ) {
-      $warningDivPassword.textContent = "Your password doesn't match";
+      $warningDivPassword2.textContent = "Your password doesn't match";
+      isReadySubmit();
     } else {
-      $warningDivPassword.textContent = '';
+      $warningDivPassword2.textContent = '';
       credentials.isPasswordValid = true;
+      isReadySubmit();
     }
   }
   if (inputType === 'password2') {
     const $warningDivPassword2 = d.getElementById('warningDivPassword2');
     credentials.password2 = $signUpForm.password2.value.trim();
+    console.log(credentials.password2);
     credentials.isPasswordValid2 = false;
     if (credentials.password2 == '') {
       $warningDivPassword2.textContent = 'Please re-enter your password';
@@ -127,9 +137,11 @@ function checkInput(inputType) {
       credentials.password2 != credentials.password
     ) {
       $warningDivPassword2.textContent = "Your password doesn't match";
+      isReadySubmit();
     } else {
       $warningDivPassword2.textContent = '';
       credentials.isPasswordValid2 = true;
+      isReadySubmit();
     }
   }
   isReadySubmit();
